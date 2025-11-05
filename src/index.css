@@ -101,7 +101,7 @@ html {
   background-size: cover;
   background-position: center top;
   background-repeat: no-repeat;
-  /* background-attachment: fixed; */
+  background-attachment: fixed;
   background-color: #f0f5f1; /* Fallback color in case image doesn't load */
   color: white;
   padding: 8rem 2rem;
@@ -110,7 +110,7 @@ html {
   display: flex;
   align-items: center;
   justify-content: center;
-  /* position: relative; */
+  position: relative;
 }
 
 .hero-content {
