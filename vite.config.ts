@@ -5,6 +5,7 @@ import react from '@vitejs/plugin-react'
 export default defineConfig({
   plugins: [react()],
   base: '/', // Use relative paths for deployment
+  publicDir: 'public', // Ensure public folder is copied
   server: {
     hmr: {
       overlay: true, // Show error overlay in the browser
