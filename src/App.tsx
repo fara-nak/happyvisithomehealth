@@ -1,5 +1,7 @@
 import { useState } from 'react'
 import './App.css'
+import { serviceCategories } from './services'
+import type { ServiceCategory } from './services'
 
 function App() {
   const [formData, setFormData] = useState({
@@ -8,14 +10,22 @@ function App() {
     phone: '',
     message: ''
   })
+  const [selectedCategory, setSelectedCategory] = useState<ServiceCategory | null>(null)
+
+  const openModal = (category: ServiceCategory) => {
+    setSelectedCategory(category)
+    document.body.style.overflow = 'hidden' // Prevent background scrolling
+  }
+
+  const closeModal = () => {
+    setSelectedCategory(null)
+    document.body.style.overflow = 'unset' // Restore scrolling
+  }
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    // Here you would typically send the form data to a server
-    // For now, we'll use mailto as a fallback
     const mailtoLink = `mailto:happyvisithomehealth@gmail.com?subject=Contact Form Submission from ${formData.name}&body=${encodeURIComponent(`Name: ${formData.name}\nEmail: ${formData.email}\nPhone: ${formData.phone}\n\nMessage:\n${formData.message}`)}`
     window.location.href = mailtoLink
-    // Reset form
     setFormData({ name: '', email: '', phone: '', message: '' })
     alert('Thank you for your message! We will get back to you soon.')
   }
@@ -26,6 +36,7 @@ function App() {
       [e.target.name]: e.target.value
     })
   }
+  
   return (
     <div className="app">
       {/* Navigation */}
@@ -36,12 +47,15 @@ function App() {
               <img src="/logo.png" alt="Happy Visit Home Health Logo" className="logo-img" />
               <h1>Happy Visit Home Health</h1>
             </div>
-            <ul className="nav-links">
-              <li><a href="#home">Home</a></li>
-              <li><a href="#services">Services</a></li>
-              <li><a href="#about">About</a></li>
-              <li><a href="#contact">Contact</a></li>
-            </ul>
+            <div className="nav-right">
+              <ul className="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#services">Services</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#contact">Contact</a></li>
+              </ul>
+              <div id="google_translate_element" className="translate-wrapper"></div>
+            </div>
           </div>
         </div>
       </nav>
@@ -49,6 +63,10 @@ function App() {
       {/* Hero Section */}
       <section id="home" className="hero">
         <div className="hero-content">
+          <div className="medicare-badge">
+            <span className="medicare-icon">✓</span>
+            <span className="medicare-text">100% Medicare Coverage</span>
+          </div>
           <h1 className="hero-title">Compassionate Care in the Comfort of Your Home</h1>
           <p className="hero-subtitle">
             Professional home health care services tailored to your needs. 
@@ -61,81 +79,103 @@ function App() {
         </div>
       </section>
 
-      {/* Services Section */}
-      <section id="services" className="services">
+      {/* About Section */}
+      <section id="about" className="about">
         <div className="container">
-          <h2 className="section-title">Our Services</h2>
-          <p className="section-subtitle">
-            We provide comprehensive home health care services to meet your needs
-          </p>
-          <div className="services-grid">
-            <div className="service-card">
-              <div className="service-icon">🏥</div>
-              <h3>Skilled Nursing</h3>
-              <p>Professional nursing care provided by licensed nurses in your home</p>
-            </div>
-            <div className="service-card">
-              <div className="service-icon">💊</div>
-              <h3>Medication Management</h3>
-              <p>Assistance with medication administration and monitoring</p>
-            </div>
-            <div className="service-card">
-              <div className="service-icon">🩺</div>
-              <h3>Health Assessments</h3>
-              <p>Regular health monitoring and assessment services</p>
-            </div>
-            <div className="service-card">
-              <div className="service-icon">🏠</div>
-              <h3>Personal Care</h3>
-              <p>Daily living assistance and personal care support</p>
-            </div>
-            <div className="service-card">
-              <div className="service-icon">💬</div>
-              <h3>Patient Education</h3>
-              <p>Education and support for managing your health at home</p>
-            </div>
-            <div className="service-card">
-              <div className="service-icon">❤️</div>
-              <h3>Companion Care</h3>
-              <p>Compassionate companionship and emotional support</p>
+          <div className="about-content">
+            <div className="about-text-box">
+              <h2 className="section-title">About Happy Visit Home Health</h2>
+              <div className="about-text-content">
+                <p>
+                  At Happy Visit Home Health, we understand that receiving care in the comfort 
+                  of your own home makes a significant difference in your healing journey. 
+                  Our team of experienced healthcare professionals is dedicated to providing 
+                  compassionate, personalized care that meets your unique needs.
+                </p>
+                <p>
+                  We believe in building meaningful relationships with our patients and their 
+                  families, ensuring that every visit is not just about medical care, but 
+                  about making you feel valued, respected, and truly cared for.
+                </p>
+                <div className="about-features">
+                  <div className="feature">
+                    <strong>✓</strong> Licensed & Certified Professionals
+                  </div>
+                  <div className="feature">
+                    <strong>✓</strong> Personalized Care Plans
+                  </div>
+                  <div className="feature">
+                    <strong>✓</strong> 24/7 Support Available
+                  </div>
+                  <div className="feature">
+                    <strong>✓</strong> Insurance Accepted
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* About Section */}
-      <section id="about" className="about">
+      {/* Services Section */}
+      <section id="services" className="services">
         <div className="container">
-          <div className="about-content">
-            <div className="about-text">
-              <h2 className="section-title">About Happy Visit Home Health</h2>
-              <p>
-                At Happy Visit Home Health, we understand that receiving care in the comfort 
-                of your own home makes a significant difference in your healing journey. 
-                Our team of experienced healthcare professionals is dedicated to providing 
-                compassionate, personalized care that meets your unique needs.
-              </p>
-              <p>
-                We believe in building meaningful relationships with our patients and their 
-                families, ensuring that every visit is not just about medical care, but 
-                about making you feel valued, respected, and truly cared for.
-              </p>
-              <div className="about-features">
-                <div className="feature">
-                  <strong>✓</strong>  Licensed & Certified Professionals 310-420-4449
+          <h2 className="section-title">Our Services</h2>
+          <p className="section-subtitle">
+            Comprehensive home health care services tailored to your needs. Click on any service to learn more.
+          </p>
+          
+          <div className="services-categories-grid">
+            {serviceCategories.map((category) => (
+              <div 
+                key={category.id}
+                className="service-category-card"
+                onClick={() => openModal(category)}
+              >
+                <div className="service-category-icon">{category.icon}</div>
+                <div className="service-category-text">
+                  <h3>{category.title}</h3>
+                  <p className="service-category-short">{category.shortDescription}</p>
                 </div>
-                <div className="feature">
-                  <strong>✓</strong> Personalized Care Plans
+                <div className="view-more">View Details →</div>
+              </div>
+            ))}
+          </div>
+
+          {/* Modal */}
+          {selectedCategory && (
+            <div className="modal-overlay" onClick={closeModal}>
+              <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+                <button className="modal-close" onClick={closeModal}>×</button>
+                <div className="modal-header">
+                  <div className="modal-icon">{selectedCategory.icon}</div>
+                  <h2>{selectedCategory.title}</h2>
                 </div>
-                <div className="feature">
-                  <strong>✓</strong> 24/7 Support Available
+                <div className="modal-body">
+                  <p className="modal-description">{selectedCategory.fullDescription}</p>
+                  {selectedCategory.services.length > 0 && (
+                    <div className="modal-services-list">
+                      {selectedCategory.services.map((service, index) => (
+                        <div key={index} className="modal-service-item">
+                          <h4>{service.title}</h4>
+                          <p className="modal-service-description">{service.description}</p>
+                          <ul className="modal-service-details">
+                            {service.details.map((detail, detailIndex) => (
+                              <li key={detailIndex}>{detail}</li>
+                            ))}
+                          </ul>
+                        </div>
+                      ))}
+                    </div>
+                  )}
                 </div>
-                <div className="feature">
-                  <strong>✓</strong> Insurance Accepted
+                <div className="modal-footer">
+                  <button className="btn btn-primary" onClick={closeModal}>Close</button>
+                  <a href="#contact" className="btn btn-secondary" onClick={closeModal}>Contact Us</a>
                 </div>
               </div>
             </div>
-          </div>
+          )}
         </div>
       </section>
 
@@ -153,7 +193,7 @@ function App() {
                 <div>
                   <h3>Phone</h3>
                   <p>Call us for immediate assistance</p>
-                  <a href="tel:+1234567890">(310) 420-4449</a>
+                  <a href="tel:+13104204449">(310) 420-4449</a>
                 </div>
               </div>
               <div className="contact-item">
@@ -231,7 +271,7 @@ function App() {
         <div className="container">
           <div className="footer-content">
             <div className="footer-section">
-              <h3>Happy Visit Home Health </h3>
+              <h3>Happy Visit Home Health</h3>
               <p>Compassionate care in the comfort of your home.</p>
             </div>
             <div className="footer-section">
