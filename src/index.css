@@ -51,16 +51,21 @@ html {
 }
 
 /* Navigation */
+header {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  width: 100%;
+}
+
 .navbar {
   background: rgba(44, 62, 80, 0.85);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-  position: sticky;
-  top: 0;
-  z-index: 1000;
   padding: 1.5rem 0;
+  width: 100%;
 }
 
 .nav-content {
