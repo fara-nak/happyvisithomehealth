@@ -1,10 +1,17 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import './App.css'
 import { serviceCategories } from './services'
 import type { ServiceCategory } from './services'
 import emailjs from '@emailjs/browser'
 
 function App() {
+  // Ensure body overflow is reset on mount
+  useEffect(() => {
+    document.body.style.overflow = 'unset'
+    return () => {
+      document.body.style.overflow = 'unset'
+    }
+  }, [])
   const [formData, setFormData] = useState({
     name: '',
     email: '',
