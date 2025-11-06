@@ -731,6 +731,76 @@ section {
   resize: vertical;
 }
 
+.form-group input:disabled,
+.form-group textarea:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.form-message {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  padding: 1.25rem;
+  border-radius: 12px;
+  margin-bottom: 1.5rem;
+  animation: slideDown 0.3s ease-out;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.form-message-success {
+  background: rgba(76, 175, 80, 0.15);
+  border: 2px solid rgba(76, 175, 80, 0.4);
+  color: #4caf50;
+}
+
+.form-message-error {
+  background: rgba(244, 67, 54, 0.15);
+  border: 2px solid rgba(244, 67, 54, 0.4);
+  color: #f44336;
+}
+
+.form-message-icon {
+  font-size: 1.5rem;
+  font-weight: 900;
+  flex-shrink: 0;
+  line-height: 1;
+}
+
+.form-message div {
+  flex: 1;
+}
+
+.form-message strong {
+  display: block;
+  font-size: 1.1rem;
+  margin-bottom: 0.5rem;
+  color: inherit;
+}
+
+.form-message p {
+  margin: 0;
+  color: inherit;
+  opacity: 0.9;
+  font-size: 0.95rem;
+}
+
 /* Footer */
 .footer {
   background: rgba(44, 62, 80, 0.85);

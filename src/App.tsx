@@ -2,6 +2,7 @@ import { useState } from 'react'
 import './App.css'
 import { serviceCategories } from './services'
 import type { ServiceCategory } from './services'
+import emailjs from '@emailjs/browser'
 
 function App() {
   const [formData, setFormData] = useState({
@@ -11,6 +12,7 @@ function App() {
     message: ''
   })
   const [selectedCategory, setSelectedCategory] = useState<ServiceCategory | null>(null)
+  const [formStatus, setFormStatus] = useState<'idle' | 'sending' | 'success' | 'error'>('idle')
 
   const openModal = (category: ServiceCategory) => {
     setSelectedCategory(category)
@@ -22,12 +24,54 @@ function App() {
     document.body.style.overflow = 'unset' // Restore scrolling
   }
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    const mailtoLink = `mailto:happyvisithomehealth@gmail.com?subject=Contact Form Submission from ${formData.name}&body=${encodeURIComponent(`Name: ${formData.name}\nEmail: ${formData.email}\nPhone: ${formData.phone}\n\nMessage:\n${formData.message}`)}`
-    window.location.href = mailtoLink
-    setFormData({ name: '', email: '', phone: '', message: '' })
-    alert('Thank you for your message! We will get back to you soon.')
+    setFormStatus('sending')
+
+    try {
+      // EmailJS configuration - you'll need to set these up in your EmailJS account
+      const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID
+      const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID
+      const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY
+
+      // Check if EmailJS is configured
+      if (!serviceId || !templateId || !publicKey || 
+          serviceId === 'YOUR_SERVICE_ID' || 
+          templateId === 'YOUR_TEMPLATE_ID' || 
+          publicKey === 'YOUR_PUBLIC_KEY') {
+        throw new Error('EmailJS is not configured. Please set up your EmailJS credentials in the .env file.')
+      }
+
+      await emailjs.send(
+        serviceId,
+        templateId,
+        {
+          from_name: formData.name,
+          from_email: formData.email,
+          phone: formData.phone,
+          message: formData.message,
+          to_email: 'happyvisithomehealthservices@gmail.com',
+        },
+        publicKey
+      )
+
+      setFormStatus('success')
+      setFormData({ name: '', email: '', phone: '', message: '' })
+      
+      // Reset success message after 5 seconds
+      setTimeout(() => {
+        setFormStatus('idle')
+      }, 5000)
+    } catch (error: unknown) {
+      console.error('Email sending failed:', error)
+      
+      setFormStatus('error')
+      
+      // Reset error message after 8 seconds (longer for configuration errors)
+      setTimeout(() => {
+        setFormStatus('idle')
+      }, 8000)
+    }
   }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -201,7 +245,7 @@ function App() {
                 <div>
                   <h3>Email</h3>
                   <p>Send us a message</p>
-                  <a href="mailto:happyvisithomehealth@gmail.com">happyvisithomehealth@gmail.com</a>
+                  <a href="mailto:happyvisithomehealthservices@gmail.com">happyvisithomehealthservices@gmail.com</a>
                 </div>
               </div>
               <div className="contact-item">
@@ -215,6 +259,24 @@ function App() {
             </div>
             <div className="contact-form">
               <form onSubmit={handleSubmit}>
+                {formStatus === 'success' && (
+                  <div className="form-message form-message-success">
+                    <span className="form-message-icon">✓</span>
+                    <div>
+                      <strong>Thank you for your message!</strong>
+                      <p>Your email has been sent successfully. We will contact you soon.</p>
+                    </div>
+                  </div>
+                )}
+                {formStatus === 'error' && (
+                  <div className="form-message form-message-error">
+                    <span className="form-message-icon">✕</span>
+                    <div>
+                      <strong>Oops! Something went wrong.</strong>
+                      <p>Email service is being set up. Please contact us directly at (310) 420-4449 or <a href="mailto:happyvisithomehealthservices@gmail.com" style={{color: 'inherit', textDecoration: 'underline'}}>happyvisithomehealthservices@gmail.com</a>.</p>
+                    </div>
+                  </div>
+                )}
                 <div className="form-group">
                   <label htmlFor="name">Name</label>
                   <input 
@@ -224,6 +286,7 @@ function App() {
                     value={formData.name}
                     onChange={handleChange}
                     required 
+                    disabled={formStatus === 'sending'}
                   />
                 </div>
                 <div className="form-group">
@@ -235,6 +298,7 @@ function App() {
                     value={formData.email}
                     onChange={handleChange}
                     required 
+                    disabled={formStatus === 'sending'}
                   />
                 </div>
                 <div className="form-group">
@@ -246,6 +310,7 @@ function App() {
                     value={formData.phone}
                     onChange={handleChange}
                     required 
+                    disabled={formStatus === 'sending'}
                   />
                 </div>
                 <div className="form-group">
@@ -253,13 +318,20 @@ function App() {
                   <textarea 
                     id="message" 
                     name="message" 
-                    rows={5} 
+                    rows={5}
                     value={formData.message}
                     onChange={handleChange}
                     required
+                    disabled={formStatus === 'sending'}
                   ></textarea>
                 </div>
-                <button type="submit" className="btn btn-primary">Send Message</button>
+                <button 
+                  type="submit" 
+                  className="btn btn-primary"
+                  disabled={formStatus === 'sending'}
+                >
+                  {formStatus === 'sending' ? 'Sending...' : 'Send Message'}
+                </button>
               </form>
             </div>
           </div>
@@ -286,7 +358,7 @@ function App() {
             <div className="footer-section">
               <h4>Contact</h4>
               <p>Phone: (310) 420-4449</p>
-              <p>Email: happyvisithomehealth@gmail.com</p>
+              <p>Email: happyvisithomehealthservices@gmail.com</p>
             </div>
           </div>
           <div className="footer-bottom">
