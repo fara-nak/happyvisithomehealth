@@ -7,9 +7,21 @@ import emailjs from '@emailjs/browser'
 function App() {
   // Ensure body overflow is reset on mount
   useEffect(() => {
-    document.body.style.overflow = 'unset'
+    try {
+      if (document.body) {
+        document.body.style.overflow = 'unset'
+      }
+    } catch (e) {
+      console.warn('Could not set body overflow:', e)
+    }
     return () => {
-      document.body.style.overflow = 'unset'
+      try {
+        if (document.body) {
+          document.body.style.overflow = 'unset'
+        }
+      } catch (e) {
+        // Ignore cleanup errors
+      }
     }
   }, [])
   const [formData, setFormData] = useState({
@@ -48,10 +60,10 @@ function App() {
     setFormStatus('sending')
 
     try {
-      // EmailJS configuration - you'll need to set these up in your EmailJS account
-      const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID
-      const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID
-      const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY
+      // EmailJS configuration - safely access environment variables
+      const serviceId = import.meta.env?.VITE_EMAILJS_SERVICE_ID || ''
+      const templateId = import.meta.env?.VITE_EMAILJS_TEMPLATE_ID || ''
+      const publicKey = import.meta.env?.VITE_EMAILJS_PUBLIC_KEY || ''
 
       // Check if EmailJS is configured
       if (!serviceId || !templateId || !publicKey || 
