@@ -105,10 +105,10 @@ function App() {
       <nav className="navbar">
         <div className="container">
           <div className="nav-content">
-            <div className="logo">
+            <a href="#home" className="logo" onClick={closeMobileMenu}>
               <img src="/logo.png" alt="Happy Visit Home Health Logo" className="logo-img" loading="eager" />
               <h1>Happy Visit Home Health</h1>
-            </div>
+            </a>
             <button 
               className="mobile-menu-toggle"
               onClick={toggleMobileMenu}
