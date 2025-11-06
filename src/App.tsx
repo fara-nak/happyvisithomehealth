@@ -5,23 +5,10 @@ import type { ServiceCategory } from './services'
 import emailjs from '@emailjs/browser'
 
 function App() {
-  // Ensure body overflow is reset on mount
   useEffect(() => {
-    try {
-      if (document.body) {
-        document.body.style.overflow = 'unset'
-      }
-    } catch (e) {
-      console.warn('Could not set body overflow:', e)
-    }
+    document.body.style.overflow = 'unset'
     return () => {
-      try {
-        if (document.body) {
-          document.body.style.overflow = 'unset'
-        }
-      } catch (e) {
-        // Ignore cleanup errors
-      }
+      document.body.style.overflow = 'unset'
     }
   }, [])
   const [formData, setFormData] = useState({
@@ -60,10 +47,10 @@ function App() {
     setFormStatus('sending')
 
     try {
-      // EmailJS configuration - safely access environment variables
-      const serviceId = import.meta.env?.VITE_EMAILJS_SERVICE_ID || ''
-      const templateId = import.meta.env?.VITE_EMAILJS_TEMPLATE_ID || ''
-      const publicKey = import.meta.env?.VITE_EMAILJS_PUBLIC_KEY || ''
+      // EmailJS configuration
+      const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID
+      const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID
+      const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY
 
       // Check if EmailJS is configured
       if (!serviceId || !templateId || !publicKey || 
