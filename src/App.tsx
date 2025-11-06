@@ -21,6 +21,7 @@ function App() {
   const [selectedCategory, setSelectedCategory] = useState<ServiceCategory | null>(null)
   const [formStatus, setFormStatus] = useState<'idle' | 'sending' | 'success' | 'error'>('idle')
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const [logoError, setLogoError] = useState(false)
 
   const toggleMobileMenu = () => {
     setMobileMenuOpen(!mobileMenuOpen)
@@ -106,7 +107,26 @@ function App() {
         <div className="container">
           <div className="nav-content">
             <a href="#home" className="logo" onClick={closeMobileMenu}>
-              <img src="/logo.png" alt="Happy Visit Home Health Logo" className="logo-img" loading="eager" />
+              {!logoError ? (
+                <img 
+                  src="/logo.png" 
+                  alt="Happy Visit Home Health Logo" 
+                  className="logo-img" 
+                  loading="eager"
+                  onError={(e) => {
+                    // Try alternative path
+                    const img = e.currentTarget
+                    if (img.src.includes('/logo.png')) {
+                      img.src = './logo.png'
+                      img.onerror = () => setLogoError(true)
+                    } else {
+                      setLogoError(true)
+                    }
+                  }}
+                />
+              ) : (
+                <div className="logo-fallback">HV</div>
+              )}
               <h1>Happy Visit Home Health</h1>
             </a>
             <button 
