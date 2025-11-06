@@ -102,11 +102,12 @@ function App() {
   return (
     <div className="app">
       {/* Navigation */}
-      <nav className="navbar">
+      <header>
+      <nav className="navbar" role="navigation" aria-label="Main navigation">
         <div className="container">
           <div className="nav-content">
             <a href="#home" className="logo" onClick={closeMobileMenu}>
-              <img src="/logo.png" alt="Happy Visit Home Health Logo" className="logo-img" loading="eager" />
+              <img src="/logo.png" alt="Happy Visit Home Health - Professional Home Health Care Services Logo" className="logo-img" loading="eager" width="50" height="50" />
               <h1>Happy Visit Home Health</h1>
             </a>
             <button 
@@ -138,12 +139,14 @@ function App() {
           </div>
         </div>
       </nav>
+      </header>
 
       {/* Hero Section */}
-      <section id="home" className="hero">
+      <main>
+      <section id="home" className="hero" aria-label="Hero section">
         <div className="hero-content">
-          <div className="medicare-badge">
-            <span className="medicare-icon">✓</span>
+          <div className="medicare-badge" aria-label="100% Medicare Coverage">
+            <span className="medicare-icon" aria-hidden="true">✓</span>
             <span className="medicare-text">100% Medicare Coverage</span>
           </div>
           <h1 className="hero-title">Compassionate Care in the Comfort of Your Home</h1>
@@ -159,11 +162,11 @@ function App() {
       </section>
 
       {/* About Section */}
-      <section id="about" className="about">
+      <section id="about" className="about" aria-labelledby="about-heading">
         <div className="container">
           <div className="about-content">
             <div className="about-text-box">
-              <h2 className="section-title">About Happy Visit Home Health</h2>
+              <h2 id="about-heading" className="section-title">About Happy Visit Home Health</h2>
               <div className="about-text-content">
                 <p>
                   At Happy Visit Home Health, we understand that receiving care in the comfort 
@@ -197,9 +200,9 @@ function App() {
       </section>
 
       {/* Services Section */}
-      <section id="services" className="services">
+      <section id="services" className="services" aria-labelledby="services-heading">
         <div className="container">
-          <h2 className="section-title">Our Services</h2>
+          <h2 id="services-heading" className="section-title">Our Services</h2>
           <p className="section-subtitle">
             Comprehensive home health care services tailored to your needs. Click on any service to learn more.
           </p>
@@ -259,9 +262,9 @@ function App() {
       </section>
 
       {/* Contact Section */}
-      <section id="contact" className="contact">
+      <section id="contact" className="contact" aria-labelledby="contact-heading">
         <div className="container">
-          <h2 className="section-title">Get In Touch</h2>
+          <h2 id="contact-heading" className="section-title">Get In Touch</h2>
           <p className="section-subtitle">
             Ready to learn more? Contact us today to discuss your home health care needs.
           </p>
@@ -372,9 +375,10 @@ function App() {
           </div>
         </div>
       </section>
+      </main>
 
       {/* Footer */}
-      <footer className="footer">
+      <footer className="footer" role="contentinfo">
         <div className="container">
           <div className="footer-content">
             <div className="footer-section">
