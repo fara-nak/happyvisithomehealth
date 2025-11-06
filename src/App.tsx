@@ -88,7 +88,7 @@ function App() {
         <div className="container">
           <div className="nav-content">
             <div className="logo">
-              <img src="/logo.png" alt="Happy Visit Home Health Logo" className="logo-img" />
+              <img src="/logo.png" alt="Happy Visit Home Health Logo" className="logo-img" loading="eager" />
               <h1>Happy Visit Home Health</h1>
             </div>
             <div className="nav-right">
