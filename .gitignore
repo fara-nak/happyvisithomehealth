@@ -29,5 +29,8 @@ dist-ssr
 .env.production.local
 .env.development.local
 
+# Config files (if you choose to use config.ts instead)
+src/config.ts
+
 # Build output
 build
