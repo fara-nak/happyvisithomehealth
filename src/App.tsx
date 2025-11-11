@@ -5,7 +5,44 @@ import type { ServiceCategory } from './services'
 import emailjs from '@emailjs/browser'
 
 function App() {
-  // All state declarations must come first (React Rules of Hooks)
+  // Ensure body overflow is reset on mount
+  useEffect(() => {
+    document.body.style.overflow = 'unset'
+    return () => {
+      document.body.style.overflow = 'unset'
+    }
+  }, [])
+
+  // Listen for Google Translate language changes to sync UI state
+  useEffect(() => {
+    const checkLanguage = () => {
+      const select = document.querySelector('.goog-te-combo') as HTMLSelectElement
+      if (select) {
+        const currentLang = select.value
+        if (currentLang === 'fa' || currentLang === 'en') {
+          setCurrentLanguage(currentLang as 'en' | 'fa')
+        }
+      }
+    }
+
+    // Wait for Google Translate to load, then set up listener
+    const interval = setInterval(() => {
+      const select = document.querySelector('.goog-te-combo') as HTMLSelectElement
+      if (select) {
+        checkLanguage()
+        select.addEventListener('change', checkLanguage)
+        clearInterval(interval)
+      }
+    }, 100)
+
+    return () => {
+      clearInterval(interval)
+      const select = document.querySelector('.goog-te-combo') as HTMLSelectElement
+      if (select) {
+        select.removeEventListener('change', checkLanguage)
+      }
+    }
+  }, [])
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -15,14 +52,7 @@ function App() {
   const [selectedCategory, setSelectedCategory] = useState<ServiceCategory | null>(null)
   const [formStatus, setFormStatus] = useState<'idle' | 'sending' | 'success' | 'error'>('idle')
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
-
-  // Ensure body overflow is reset on mount
-  useEffect(() => {
-    document.body.style.overflow = 'unset'
-    return () => {
-      document.body.style.overflow = 'unset'
-    }
-  }, [])
+  const [currentLanguage, setCurrentLanguage] = useState<'en' | 'fa'>('en')
 
   const toggleMobileMenu = () => {
     setMobileMenuOpen(!mobileMenuOpen)
@@ -100,6 +130,51 @@ function App() {
       [e.target.name]: e.target.value
     })
   }
+
+  const switchLanguage = (lang: 'en' | 'fa') => {
+    setCurrentLanguage(lang)
+    
+    const triggerTranslation = () => {
+      const select = document.querySelector('.goog-te-combo') as HTMLSelectElement
+      if (select) {
+        select.value = lang
+        const changeEvent = new Event('change', { bubbles: true, cancelable: true })
+        select.dispatchEvent(changeEvent)
+        
+        setTimeout(() => {
+          if (select.value !== lang) {
+            select.value = lang
+          }
+          const finalEvent = new Event('change', { bubbles: true, cancelable: true })
+          select.dispatchEvent(finalEvent)
+          
+        }, 100)
+      } else {
+        // If select doesn't exist yet, set cookie directly
+        const cookieName = 'googtrans'
+        const cookieValue = lang === 'en' ? '/en/en' : `/en/${lang}`
+        document.cookie = `${cookieName}=${cookieValue}; path=/; max-age=31536000`
+        // Reload page to apply translation
+        window.location.reload()
+      }
+    }
+    
+    // Try immediately
+    triggerTranslation()
+    
+    // If Google Translate isn't loaded yet, wait for it
+    if (!document.querySelector('.goog-te-combo')) {
+      const checkInterval = setInterval(() => {
+        if (document.querySelector('.goog-te-combo')) {
+          triggerTranslation()
+          clearInterval(checkInterval)
+        }
+      }, 100)
+      
+      // Clear interval after 5 seconds if still not loaded
+      setTimeout(() => clearInterval(checkInterval), 5000)
+    }
+  }
   
   return (
     <div className="app">
@@ -136,6 +211,23 @@ function App() {
                 <li><a href="#about" onClick={closeMobileMenu}>About</a></li>
                 <li><a href="#contact" onClick={closeMobileMenu}>Contact</a></li>
               </ul>
+              <div className="language-switcher">
+                <button 
+                  className={`lang-btn ${currentLanguage === 'en' ? 'active' : ''}`}
+                  onClick={() => switchLanguage('en')}
+                  aria-label="Switch to English"
+                >
+                  English
+                </button>
+                <span className="lang-separator">|</span>
+                <button 
+                  className={`lang-btn ${currentLanguage === 'fa' ? 'active' : ''}`}
+                  onClick={() => switchLanguage('fa')}
+                  aria-label="Switch to Persian"
+                >
+                  فارسی
+                </button>
+              </div>
               <div id="google_translate_element" className="translate-wrapper"></div>
             </div>
           </div>
@@ -276,7 +368,7 @@ function App() {
                 <div className="contact-icon">📞</div>
                 <div>
                   <h3>Phone</h3>
-                  <p>Call us for immediate assistance</p>
+                  <p>Call us for immediate assistance. We are available 24/7.</p>
                   <a href="tel:+13104204449">(310) 420-4449</a>
                 </div>
               </div>
@@ -292,7 +384,7 @@ function App() {
                 <div className="contact-icon">📍</div>
                 <div>
                   <h3>Office Hours</h3>
-                  <p>Monday - Friday: 8:00 AM - 6:00 PM</p>
+                  <p>Monday - Friday: 9:00 AM - 4:00 PM</p>
                   <p>Saturday: 9:00 AM - 2:00 PM</p>
                 </div>
               </div>
