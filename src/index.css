@@ -57,6 +57,8 @@ header {
   z-index: 1000;
   width: 100%;
   overflow: visible;
+  transition: margin-top 0.3s ease;
+  margin-top: 50px;
 }
 
 .navbar {
@@ -65,7 +67,7 @@ header {
   -webkit-backdrop-filter: blur(10px);
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-  padding: 1.5rem 0;
+  padding: 0.75rem 0;
   width: 100%;
   overflow: visible;
 }
@@ -81,6 +83,7 @@ header {
   display: flex;
   align-items: center;
   gap: 2rem;
+  margin-left: auto;
 }
 
 /* Mobile Menu Toggle */
@@ -135,6 +138,56 @@ header {
   transform: rotate(-45deg) translate(8px, -8px);
 }
 
+.language-switcher {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-left: 2rem;
+  margin-right: 1rem;
+}
+
+.lang-btn {
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  padding: 0.4rem 0.8rem;
+  border-radius: 4px;
+  transition: all 0.3s ease;
+  font-family: inherit;
+}
+
+.lang-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  transform: translateY(-1px);
+}
+
+.lang-btn.active {
+  background: rgba(255, 255, 255, 0.2);
+  font-weight: 600;
+}
+
+.lang-separator {
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 0.9rem;
+  user-select: none;
+}
+
+.translate-section {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.translate-label {
+  color: white;
+  font-size: 0.9rem;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
 .translate-wrapper {
   display: flex !important;
   align-items: center;
@@ -144,10 +197,33 @@ header {
 }
 
 /* Google Translate Styles */
-/* Hide ONLY the top banner, keep the widget visible */
+/* Hide ONLY the top banner/popup that appears when language changes */
+/* Keep the widget (#google_translate_element) visible */
 .goog-te-banner-frame {
   display: none !important;
   height: 0 !important;
+  visibility: hidden !important;
+  position: absolute !important;
+  top: -9999px !important;
+  left: -9999px !important;
+  width: 0 !important;
+  overflow: hidden !important;
+}
+
+.goog-te-banner-frame.skiptranslate {
+  display: none !important;
+  height: 0 !important;
+  visibility: hidden !important;
+  position: absolute !important;
+  top: -9999px !important;
+  left: -9999px !important;
+  width: 0 !important;
+  overflow: hidden !important;
+}
+
+/* Hide popup balloons that appear when language changes */
+.goog-te-balloon-frame {
+  display: none !important;
   visibility: hidden !important;
 }
 
@@ -159,13 +235,16 @@ header {
 body {
   top: 0 !important;
   position: static !important;
+  margin-top: 0 !important;
+  padding-top: 0 !important;
 }
 
-/* Hide the top banner frame */
-.goog-te-banner-frame.skiptranslate {
+/* Only hide banner iframes, not the widget iframe */
+body > iframe[src*="translate.googleapis.com"] {
   display: none !important;
-  height: 0 !important;
   visibility: hidden !important;
+  height: 0 !important;
+  width: 0 !important;
 }
 
 /* Keep the translate widget visible */
@@ -240,9 +319,10 @@ body {
 }
 
 .logo-img {
-  height: 50px;
+  height: 40px;
   width: auto;
   object-fit: contain;
+  flex-shrink: 0;
 }
 
 .logo h1 {
@@ -251,12 +331,15 @@ body {
   font-weight: 700;
   margin: 0;
   text-decoration: none;
+  white-space: nowrap;
+  line-height: 1.2;
 }
 
 .nav-links {
   display: flex;
   list-style: none;
   gap: 2rem;
+  margin-right: 3rem;
 }
 
 .nav-links a {
@@ -1014,9 +1097,35 @@ section {
     width: 100%;
   }
 
-  .translate-wrapper {
+  .language-switcher {
     width: 100%;
     margin-top: 1rem;
+    margin-bottom: 1rem;
+    justify-content: center;
+    padding: 0.5rem 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .lang-btn {
+    font-size: 1rem;
+    padding: 0.6rem 1rem;
+  }
+
+  .translate-section {
+    width: 100%;
+    margin-top: 1rem;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .translate-label {
+    font-size: 1rem;
+  }
+
+  .translate-wrapper {
+    width: 100%;
   }
 
   #google_translate_element {
