@@ -51,16 +51,23 @@ html {
 }
 
 /* Navigation */
+header {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  width: 100%;
+  overflow: visible;
+}
+
 .navbar {
   background: rgba(44, 62, 80, 0.85);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-  position: sticky;
-  top: 0;
-  z-index: 1000;
   padding: 1.5rem 0;
+  width: 100%;
+  overflow: visible;
 }
 
 .nav-content {
@@ -129,8 +136,11 @@ html {
 }
 
 .translate-wrapper {
-  display: flex;
+  display: flex !important;
   align-items: center;
+  visibility: visible !important;
+  opacity: 1 !important;
+  z-index: 1001;
 }
 
 /* Google Translate Styles */
@@ -163,12 +173,18 @@ body {
   font-size: 0.9rem;
   display: block !important;
   visibility: visible !important;
+  opacity: 1 !important;
+  z-index: 1001;
+  position: relative;
 }
 
 .translate-wrapper {
   display: flex !important;
   align-items: center;
   visibility: visible !important;
+  opacity: 1 !important;
+  z-index: 1001;
+  position: relative;
 }
 
 #google_translate_element select {
