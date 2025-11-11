@@ -5,6 +5,18 @@ import type { ServiceCategory } from './services'
 import emailjs from '@emailjs/browser'
 
 function App() {
+  // All state declarations must come first (React Rules of Hooks)
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    phone: '',
+    message: ''
+  })
+  const [selectedCategory, setSelectedCategory] = useState<ServiceCategory | null>(null)
+  const [formStatus, setFormStatus] = useState<'idle' | 'sending' | 'success' | 'error'>('idle')
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const [currentLanguage, setCurrentLanguage] = useState<'en' | 'fa'>('en')
+
   // Ensure body overflow is reset on mount
   useEffect(() => {
     document.body.style.overflow = 'unset'
@@ -43,16 +55,6 @@ function App() {
       }
     }
   }, [])
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    phone: '',
-    message: ''
-  })
-  const [selectedCategory, setSelectedCategory] = useState<ServiceCategory | null>(null)
-  const [formStatus, setFormStatus] = useState<'idle' | 'sending' | 'success' | 'error'>('idle')
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
-  const [currentLanguage, setCurrentLanguage] = useState<'en' | 'fa'>('en')
 
   const toggleMobileMenu = () => {
     setMobileMenuOpen(!mobileMenuOpen)
