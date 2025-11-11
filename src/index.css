@@ -31,6 +31,10 @@ body {
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-color: #f0f5f1;
+  top: 0 !important;
+  position: static !important;
+  margin-top: 0 !important;
+  padding-top: 0 !important;
 }
 
 /* Fix background attachment for mobile performance */
