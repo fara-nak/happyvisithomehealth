@@ -15,44 +15,12 @@ function App() {
   const [selectedCategory, setSelectedCategory] = useState<ServiceCategory | null>(null)
   const [formStatus, setFormStatus] = useState<'idle' | 'sending' | 'success' | 'error'>('idle')
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
-  const [currentLanguage, setCurrentLanguage] = useState<'en' | 'fa'>('en')
 
   // Ensure body overflow is reset on mount
   useEffect(() => {
     document.body.style.overflow = 'unset'
     return () => {
       document.body.style.overflow = 'unset'
-    }
-  }, [])
-
-  // Listen for Google Translate language changes to sync UI state
-  useEffect(() => {
-    const checkLanguage = () => {
-      const select = document.querySelector('.goog-te-combo') as HTMLSelectElement
-      if (select) {
-        const currentLang = select.value
-        if (currentLang === 'fa' || currentLang === 'en') {
-          setCurrentLanguage(currentLang as 'en' | 'fa')
-        }
-      }
-    }
-
-    // Wait for Google Translate to load, then set up listener
-    const interval = setInterval(() => {
-      const select = document.querySelector('.goog-te-combo') as HTMLSelectElement
-      if (select) {
-        checkLanguage()
-        select.addEventListener('change', checkLanguage)
-        clearInterval(interval)
-      }
-    }, 100)
-
-    return () => {
-      clearInterval(interval)
-      const select = document.querySelector('.goog-te-combo') as HTMLSelectElement
-      if (select) {
-        select.removeEventListener('change', checkLanguage)
-      }
     }
   }, [])
 
