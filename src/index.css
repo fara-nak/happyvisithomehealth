@@ -175,19 +175,6 @@ header {
   user-select: none;
 }
 
-.translate-section {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-}
-
-.translate-label {
-  color: white;
-  font-size: 0.9rem;
-  font-weight: 500;
-  white-space: nowrap;
-}
-
 .translate-wrapper {
   display: flex !important;
   align-items: center;
@@ -197,19 +184,8 @@ header {
 }
 
 /* Google Translate Styles */
-/* Hide ONLY the top banner/popup that appears when language changes */
-/* Keep the widget (#google_translate_element) visible */
-.goog-te-banner-frame {
-  display: none !important;
-  height: 0 !important;
-  visibility: hidden !important;
-  position: absolute !important;
-  top: -9999px !important;
-  left: -9999px !important;
-  width: 0 !important;
-  overflow: hidden !important;
-}
-
+/* Hide the top banner/popup that appears when language changes */
+.goog-te-banner-frame,
 .goog-te-banner-frame.skiptranslate {
   display: none !important;
   height: 0 !important;
@@ -229,14 +205,6 @@ header {
 
 .goog-te-menu-frame {
   max-width: 100% !important;
-}
-
-/* Ensure body doesn't get pushed down by banner */
-body {
-  top: 0 !important;
-  position: static !important;
-  margin-top: 0 !important;
-  padding-top: 0 !important;
 }
 
 /* Only hide banner iframes, not the widget iframe */
@@ -263,7 +231,6 @@ body > iframe[src*="translate.googleapis.com"] {
   visibility: visible !important;
   opacity: 1 !important;
   z-index: 1001;
-  position: relative;
 }
 
 #google_translate_element select {
@@ -290,16 +257,11 @@ body > iframe[src*="translate.googleapis.com"] {
   font-size: 0 !important;
 }
 
-.goog-te-gadget .goog-te-combo {
+.goog-te-gadget .goog-te-combo,
+.goog-te-combo {
   margin: 0 !important;
   color: var(--text-dark) !important;
   font-size: 0.9rem !important;
-  display: block !important;
-  visibility: visible !important;
-}
-
-/* Ensure the translate element is always visible */
-.goog-te-combo {
   display: block !important;
   visibility: visible !important;
 }
@@ -1110,18 +1072,6 @@ section {
   .lang-btn {
     font-size: 1rem;
     padding: 0.6rem 1rem;
-  }
-
-  .translate-section {
-    width: 100%;
-    margin-top: 1rem;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 0.5rem;
-  }
-
-  .translate-label {
-    font-size: 1rem;
   }
 
   .translate-wrapper {

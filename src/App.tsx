@@ -25,55 +25,18 @@ function App() {
       }
     }
 
-    // Push header down when translation is active
-    const checkBanner = () => {
-      const select = document.querySelector('.goog-te-combo') as HTMLSelectElement
-      if (select) {
-        const isTranslated = select.value !== 'en' && select.value !== ''
-        if (isTranslated) {
-          document.body.classList.add('translate-active')
-        } else {
-          document.body.classList.remove('translate-active')
-        }
-      }
-    }
-
     // Wait for Google Translate to load, then set up listener
     const interval = setInterval(() => {
       const select = document.querySelector('.goog-te-combo') as HTMLSelectElement
       if (select) {
         checkLanguage()
-        checkBanner()
-        select.addEventListener('change', () => {
-          checkLanguage()
-          setTimeout(checkBanner, 200)
-        })
+        select.addEventListener('change', checkLanguage)
         clearInterval(interval)
       }
     }, 100)
 
-    // Watch for DOM changes to detect when banner appears
-    const observer = new MutationObserver(() => {
-      checkBanner()
-    })
-
-    observer.observe(document.body, {
-      childList: true,
-      subtree: true,
-      attributes: true,
-      attributeFilter: ['style', 'class']
-    })
-
-    // Also check periodically
-    const checkInterval = setInterval(checkBanner, 500)
-
-    // Initial check
-    checkBanner()
-
     return () => {
       clearInterval(interval)
-      clearInterval(checkInterval)
-      observer.disconnect()
       const select = document.querySelector('.goog-te-combo') as HTMLSelectElement
       if (select) {
         select.removeEventListener('change', checkLanguage)
@@ -171,13 +134,6 @@ function App() {
   const switchLanguage = (lang: 'en' | 'fa') => {
     setCurrentLanguage(lang)
     
-    // Immediately push header down if not English
-    if (lang !== 'en') {
-      document.body.classList.add('translate-active')
-    } else {
-      document.body.classList.remove('translate-active')
-    }
-    
     const triggerTranslation = () => {
       const select = document.querySelector('.goog-te-combo') as HTMLSelectElement
       if (select) {
@@ -191,20 +147,12 @@ function App() {
           }
           const finalEvent = new Event('change', { bubbles: true, cancelable: true })
           select.dispatchEvent(finalEvent)
-          
-          // Ensure class is set after translation
-          if (lang !== 'en') {
-            document.body.classList.add('translate-active')
-          } else {
-            document.body.classList.remove('translate-active')
-          }
         }, 100)
       } else {
         // If select doesn't exist yet, set cookie directly
         const cookieName = 'googtrans'
         const cookieValue = lang === 'en' ? '/en/en' : `/en/${lang}`
         document.cookie = `${cookieName}=${cookieValue}; path=/; max-age=31536000`
-        // Reload page to apply translation
         window.location.reload()
       }
     }
@@ -221,7 +169,6 @@ function App() {
         }
       }, 100)
       
-      // Clear interval after 5 seconds if still not loaded
       setTimeout(() => clearInterval(checkInterval), 5000)
     }
   }
