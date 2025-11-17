@@ -1,11 +1,17 @@
 User-agent: *
 Allow: /
 
-# Disallow old paths that no longer exist
+# Disallow old paths that no longer exist (these are redirected to homepage)
 Disallow: /HIL/
 Disallow: /lander
 Disallow: /About.html
 Disallow: /index.html
+Disallow: /about.html
+Disallow: /contact.html
+Disallow: /services.html
+
+# Disallow hash URLs (these are not separate pages)
+Disallow: /*#*
 
 # Sitemap
 Sitemap: https://www.happyvisithomehealth.com/sitemap.xml
