@@ -61,6 +61,7 @@ header {
   z-index: 1000;
   width: 100%;
   overflow: visible;
+  margin-top: 50px;
 }
 
 .navbar {
