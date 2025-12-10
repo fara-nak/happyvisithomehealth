@@ -1,0 +1,42 @@
+# MIME Type Configuration
+# This ensures JavaScript and CSS files are served with correct MIME types
+
+# JavaScript files
+<IfModule mod_mime.c>
+    AddType application/javascript .js
+    AddType application/javascript .mjs
+    AddType text/javascript .js
+</IfModule>
+
+# CSS files
+<IfModule mod_mime.c>
+    AddType text/css .css
+</IfModule>
+
+# JSON files
+<IfModule mod_mime.c>
+    AddType application/json .json
+</IfModule>
+
+# SVG files
+<IfModule mod_mime.c>
+    AddType image/svg+xml .svg
+</IfModule>
+
+# Enable compression
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css text/javascript application/javascript application/json
+</IfModule>
+
+# Cache control
+<IfModule mod_expires.c>
+    ExpiresActive On
+    ExpiresByType application/javascript "access plus 1 year"
+    ExpiresByType text/css "access plus 1 year"
+    ExpiresByType image/png "access plus 1 year"
+    ExpiresByType image/jpg "access plus 1 year"
+    ExpiresByType image/jpeg "access plus 1 year"
+    ExpiresByType image/gif "access plus 1 year"
+    ExpiresByType image/svg+xml "access plus 1 year"
+</IfModule>
+
