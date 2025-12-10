@@ -16,6 +16,7 @@ function App() {
   const [formStatus, setFormStatus] = useState<'idle' | 'sending' | 'success' | 'error'>('idle')
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [currentLanguage, setCurrentLanguage] = useState<'en' | 'fa'>('en')
+  const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(null)
 
   // Ensure body overflow is reset on mount
   useEffect(() => {
@@ -177,7 +178,7 @@ function App() {
       setTimeout(() => clearInterval(checkInterval), 5000)
     }
   }
-  
+
   return (
     <div className="app">
       {/* Navigation */}
@@ -211,6 +212,7 @@ function App() {
                 <li><a href="#home" onClick={closeMobileMenu}>Home</a></li>
                 <li><a href="#services" onClick={closeMobileMenu}>Services</a></li>
                 <li><a href="#about" onClick={closeMobileMenu}>About</a></li>
+                <li><a href="#faq" onClick={closeMobileMenu}>FAQ</a></li>
                 <li><a href="#contact" onClick={closeMobileMenu}>Contact</a></li>
               </ul>
               <div className="language-switcher">
@@ -254,7 +256,7 @@ function App() {
             <a href="#contact" className="btn btn-primary">Get Started</a>
             <a href="#services" className="btn btn-secondary">Our Services</a>
           </div>
-        </div>
+      </div>
       </section>
 
       {/* About Section */}
@@ -357,6 +359,90 @@ function App() {
         </div>
       </section>
 
+      {/* FAQ Section */}
+      <section id="faq" className="faq" aria-labelledby="faq-heading">
+        <div className="container">
+          <h2 id="faq-heading" className="section-title">Frequently Asked Questions</h2>
+          <p className="section-subtitle">
+            Common questions about our home health care services and Medicare coverage.
+          </p>
+          <div className="faq-list">
+            <div 
+              className={`faq-item ${openFaqIndex === 0 ? 'open' : ''}`}
+              onClick={() => setOpenFaqIndex(openFaqIndex === 0 ? null : 0)}
+            >
+              <div className="faq-header">
+                <h3>Does Medicare cover home health care services?</h3>
+                <span className="faq-icon">{openFaqIndex === 0 ? '−' : '+'}</span>
+              </div>
+              <div className="faq-content">
+                <p>Yes, Happy Visit Home Health provides 100% Medicare covered home health care services. All our services including skilled nursing, physical therapy, occupational therapy, speech therapy, and wound care are covered by Medicare when you meet the eligibility requirements.</p>
+              </div>
+            </div>
+            <div 
+              className={`faq-item ${openFaqIndex === 1 ? 'open' : ''}`}
+              onClick={() => setOpenFaqIndex(openFaqIndex === 1 ? null : 1)}
+            >
+              <div className="faq-header">
+                <h3>What home health care services do you provide?</h3>
+                <span className="faq-icon">{openFaqIndex === 1 ? '−' : '+'}</span>
+              </div>
+              <div className="faq-content">
+                <p>We provide comprehensive home health care services including skilled nursing, physical therapy, occupational therapy, speech therapy, wound care, IV medication administration, diabetic management, home health aide services, and care coordination. All services are provided by licensed professionals in the comfort of your home.</p>
+              </div>
+            </div>
+            <div 
+              className={`faq-item ${openFaqIndex === 2 ? 'open' : ''}`}
+              onClick={() => setOpenFaqIndex(openFaqIndex === 2 ? null : 2)}
+            >
+              <div className="faq-header">
+                <h3>What areas do you serve?</h3>
+                <span className="faq-icon">{openFaqIndex === 2 ? '−' : '+'}</span>
+              </div>
+              <div className="faq-content">
+                <p>Happy Visit Home Health serves Los Angeles, Orange County, San Diego, and surrounding areas in California. We bring professional healthcare services directly to your home.</p>
+              </div>
+            </div>
+            <div 
+              className={`faq-item ${openFaqIndex === 3 ? 'open' : ''}`}
+              onClick={() => setOpenFaqIndex(openFaqIndex === 3 ? null : 3)}
+            >
+              <div className="faq-header">
+                <h3>How do I qualify for home health care services?</h3>
+                <span className="faq-icon">{openFaqIndex === 3 ? '−' : '+'}</span>
+              </div>
+              <div className="faq-content">
+                <p>To qualify for Medicare-covered home health care, you must be homebound (leaving home requires considerable effort), need skilled nursing care or therapy services, and have a doctor's order for home health care. Our team can help you determine your eligibility and coordinate with your physician.</p>
+              </div>
+            </div>
+            <div 
+              className={`faq-item ${openFaqIndex === 4 ? 'open' : ''}`}
+              onClick={() => setOpenFaqIndex(openFaqIndex === 4 ? null : 4)}
+            >
+              <div className="faq-header">
+                <h3>How quickly can services begin?</h3>
+                <span className="faq-icon">{openFaqIndex === 4 ? '−' : '+'}</span>
+              </div>
+              <div className="faq-content">
+                <p>We work quickly to get you started. Once we receive your referral and complete the initial assessment, services typically begin within 24-48 hours. We understand the importance of timely care and prioritize getting you the help you need as soon as possible.</p>
+              </div>
+            </div>
+            <div 
+              className={`faq-item ${openFaqIndex === 5 ? 'open' : ''}`}
+              onClick={() => setOpenFaqIndex(openFaqIndex === 5 ? null : 5)}
+            >
+              <div className="faq-header">
+                <h3>Do I need a doctor's referral?</h3>
+                <span className="faq-icon">{openFaqIndex === 5 ? '−' : '+'}</span>
+              </div>
+              <div className="faq-content">
+                <p>Yes, Medicare requires a doctor's order for home health care services. Your physician will need to certify that you need skilled nursing care or therapy services and that you are homebound. We can help coordinate this process with your doctor.</p>
+              </div>
+            </div>
+          </div>
+      </div>
+      </section>
+
       {/* Contact Section */}
       <section id="contact" className="contact" aria-labelledby="contact-heading">
         <div className="container">
@@ -386,8 +472,8 @@ function App() {
                 <div className="contact-icon">📍</div>
                 <div>
                   <h3>Office Hours</h3>
-                  <p>Monday - Friday: 9:00 AM - 4:00 PM</p>
-                  <p>Saturday: 9:00 AM - 2:00 PM</p>
+                  <p>Monday - Friday: 8:00 AM - 4:00 PM</p>
+                  <p>Saturday: 8:00 AM - 2:00 PM</p>
                 </div>
               </div>
             </div>
@@ -487,6 +573,7 @@ function App() {
                 <li><a href="#home">Home</a></li>
                 <li><a href="#services">Services</a></li>
                 <li><a href="#about">About</a></li>
+                <li><a href="#faq">FAQ</a></li>
                 <li><a href="#contact">Contact</a></li>
               </ul>
             </div>

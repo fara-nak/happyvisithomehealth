@@ -325,9 +325,9 @@ body {
   background-attachment: fixed;
   background-color: #f0f5f1; /* Fallback color in case image doesn't load */
   color: white;
-  padding: 6rem 2rem 5rem 2rem;
+  padding: 4rem 2rem 3rem 2rem;
   text-align: center;
-  min-height: 90vh;
+  min-height: 70vh;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -445,17 +445,17 @@ body {
 
 /* Section Styles */
 section {
-  padding: 5rem 0;
+  padding: 3rem 0;
 }
 
 .about {
-  padding-top: 3rem;
+  padding-top: 2rem;
 }
 
 .section-title {
-  font-size: 2.5rem;
+  font-size: 2.25rem;
   text-align: center;
-  margin-bottom: 1rem;
+  margin-bottom: 0.75rem;
   color: white;
   font-weight: 700;
   text-shadow: 0 4px 12px rgba(0, 0, 0, 0.8), 0 2px 6px rgba(0, 0, 0, 0.6), 0 0 30px rgba(0, 0, 0, 0.5);
@@ -466,7 +466,7 @@ section {
   text-align: center;
   color: white;
   font-size: 1.1rem;
-  margin-bottom: 3rem;
+  margin-bottom: 2rem;
   max-width: 600px;
   margin-left: auto;
   margin-right: auto;
@@ -481,24 +481,24 @@ section {
 .services-categories-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 2rem;
-  margin-top: 3rem;
+  gap: 1.5rem;
+  margin-top: 2rem;
 }
 
 .service-category-card {
   background: rgba(255, 255, 255, 0.95);
   backdrop-filter: blur(10px);
-  border-radius: 15px;
+  border-radius: 12px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
   cursor: pointer;
   transition: all 0.3s ease;
-  padding: 2.5rem;
+  padding: 1.5rem;
   text-align: center;
   border: 2px solid rgba(255, 255, 255, 0.3);
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 1rem;
+  gap: 0.75rem;
 }
 
 .service-category-card:hover {
@@ -508,7 +508,7 @@ section {
 }
 
 .service-category-icon {
-  font-size: 4rem;
+  font-size: 3rem;
   line-height: 1;
 }
 
@@ -518,24 +518,24 @@ section {
 }
 
 .service-category-text h3 {
-  font-size: 1.75rem;
-  margin-bottom: 0.75rem;
+  font-size: 1.4rem;
+  margin-bottom: 0.5rem;
   color: var(--text-dark);
   font-weight: 700;
 }
 
 .service-category-short {
   color: var(--text-light);
-  line-height: 1.6;
+  line-height: 1.5;
   margin: 0;
-  font-size: 1rem;
+  font-size: 0.9rem;
 }
 
 .view-more {
   color: var(--primary-color);
   font-weight: 600;
-  font-size: 1rem;
-  margin-top: 0.5rem;
+  font-size: 0.9rem;
+  margin-top: 0.25rem;
   transition: transform 0.3s ease;
 }
 
@@ -724,28 +724,28 @@ section {
   backdrop-filter: blur(15px);
   -webkit-backdrop-filter: blur(15px);
   border-radius: 20px;
-  padding: 3rem;
+  padding: 2rem;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
   border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .about-text-content {
-  margin-top: 2rem;
+  margin-top: 1.5rem;
 }
 
 .about-text-content p {
-  font-size: 1.1rem;
+  font-size: 1.05rem;
   color: white;
-  margin-bottom: 1.5rem;
-  line-height: 1.8;
+  margin-bottom: 1rem;
+  line-height: 1.7;
   text-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
 }
 
 .about-features {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 1rem;
-  margin-top: 2rem;
+  gap: 0.75rem;
+  margin-top: 1.5rem;
 }
 
 .feature {
@@ -767,6 +767,140 @@ section {
   font-size: 1.2rem;
 }
 
+/* FAQ Section */
+.faq {
+  padding: 3rem 0;
+  background: transparent;
+  position: relative;
+}
+
+.faq .container {
+  max-width: 900px;
+}
+
+.faq-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-top: 2rem;
+}
+
+.faq-item {
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  border-left: 3px solid #2d8659;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  overflow: hidden;
+}
+
+.faq-item:hover {
+  box-shadow: 0 4px 12px rgba(45, 134, 89, 0.1);
+  background-color: #f0f5f1;
+}
+
+.faq-item.open {
+  background-color: #ffffff;
+  box-shadow: 0 4px 16px rgba(45, 134, 89, 0.15);
+}
+
+.faq-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 1.25rem;
+  gap: 0.75rem;
+}
+
+.faq-item h3 {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #2d8659;
+  margin: 0;
+  line-height: 1.3;
+  flex: 1;
+}
+
+.faq-icon {
+  font-size: 1.1rem;
+  font-weight: 300;
+  color: #2d8659;
+  flex-shrink: 0;
+  width: 1.5rem;
+  height: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background-color: rgba(45, 134, 89, 0.1);
+  transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+.faq-item.open .faq-icon {
+  background-color: #2d8659;
+  color: white;
+  transform: rotate(180deg);
+}
+
+.faq-content {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease, padding 0.3s ease;
+  padding: 0 1.25rem;
+}
+
+.faq-item.open .faq-content {
+  max-height: 500px;
+  padding: 0 1.25rem 0.75rem 1.25rem;
+}
+
+.faq-content p {
+  color: #555;
+  line-height: 1.5;
+  margin: 0;
+  padding-top: 0.25rem;
+  font-size: 0.9rem;
+}
+
+@media (max-width: 768px) {
+  .faq {
+    padding: 2rem 0;
+  }
+
+  .faq-list {
+    margin-top: 1.5rem;
+    gap: 0.4rem;
+  }
+
+  .faq-header {
+    padding: 0.625rem 1rem;
+  }
+
+  .faq-item h3 {
+    font-size: 0.95rem;
+    line-height: 1.3;
+  }
+
+  .faq-icon {
+    width: 1.35rem;
+    height: 1.35rem;
+    font-size: 1rem;
+  }
+
+  .faq-content {
+    padding: 0 1rem;
+  }
+
+  .faq-item.open .faq-content {
+    padding: 0 1rem 0.625rem 1rem;
+  }
+
+  .faq-content p {
+    font-size: 0.85rem;
+    line-height: 1.5;
+  }
+}
+
 .contact {
   background: transparent;
   position: relative;
@@ -775,8 +909,8 @@ section {
 .contact-content {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 3rem;
-  margin-top: 3rem;
+  gap: 2rem;
+  margin-top: 2rem;
 }
 
 .contact-info {
@@ -1120,8 +1254,8 @@ section {
   }
 
   .hero {
-    padding: 4rem 1rem;
-    min-height: 70vh;
+    padding: 3rem 1rem 2rem 1rem;
+    min-height: 60vh;
   }
 
   .medicare-badge {
@@ -1174,15 +1308,25 @@ section {
 
   /* Services */
   .service-category-card {
-    padding: 2rem 1.5rem;
+    padding: 1.25rem 1.25rem;
+    gap: 0.625rem;
   }
 
   .service-category-icon {
-    font-size: 3rem;
+    font-size: 2.5rem;
   }
 
   .service-category-text h3 {
-    font-size: 1.5rem;
+    font-size: 1.25rem;
+    margin-bottom: 0.4rem;
+  }
+
+  .service-category-short {
+    font-size: 0.85rem;
+  }
+
+  .view-more {
+    font-size: 0.85rem;
   }
 
   /* Modal */
@@ -1276,15 +1420,25 @@ section {
   }
 
   .service-category-card {
-    padding: 1.5rem 1rem;
+    padding: 1.25rem 0.875rem;
+    gap: 0.5rem;
   }
 
   .service-category-icon {
-    font-size: 2.5rem;
+    font-size: 2.25rem;
   }
 
   .service-category-text h3 {
-    font-size: 1.25rem;
+    font-size: 1.1rem;
+    margin-bottom: 0.35rem;
+  }
+
+  .service-category-short {
+    font-size: 0.8rem;
+  }
+
+  .view-more {
+    font-size: 0.8rem;
   }
 
   .about-text-box {

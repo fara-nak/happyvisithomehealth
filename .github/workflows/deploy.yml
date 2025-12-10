@@ -39,6 +39,20 @@ jobs:
           VITE_EMAILJS_PUBLIC_KEY: ${{ secrets.VITE_EMAILJS_PUBLIC_KEY }}
         run: npm run build
 
+      - name: Verify Build
+        run: |
+          echo "Verifying build output..."
+          if grep -q "/src/main.tsx" dist/index.html; then
+            echo "❌ ERROR: Built index.html contains development script!"
+            echo "This will cause a blank page in production."
+            exit 1
+          fi
+          if ! grep -q "/assets/index-" dist/index.html; then
+            echo "❌ ERROR: Built index.html missing production script!"
+            exit 1
+          fi
+          echo "✅ Build verification passed!"
+
       - name: Setup Pages
         uses: actions/configure-pages@v4
 
