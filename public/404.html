@@ -4,11 +4,39 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Page Not Found - Happy Visit Home Health</title>
-    <meta http-equiv="refresh" content="0; url=/">
+    <link rel="canonical" href="https://www.happyvisithomehealth.com/" />
+    <meta name="robots" content="noindex, follow" />
     <script>
-        // Immediate redirect to homepage
-        window.location.replace('/');
+        // List of old URLs that should redirect to homepage
+        const oldPaths = [
+            '/index.html',
+            '/About.html',
+            '/HIL/',
+            '/lander',
+            '/HIL/index.php'
+        ];
+        
+        // Get current path
+        const currentPath = window.location.pathname + window.location.search;
+        
+        // Check if this is an old URL that should redirect
+        const shouldRedirect = oldPaths.some(path => {
+            if (path.endsWith('/')) {
+                return currentPath.startsWith(path);
+            }
+            return currentPath === path || currentPath.startsWith(path + '?');
+        });
+        
+        // Redirect old URLs to homepage
+        if (shouldRedirect || currentPath.includes('/HIL/') || currentPath.includes('/lander')) {
+            // 301 redirect (permanent) for SEO
+            window.location.replace('https://www.happyvisithomehealth.com/');
+        } else {
+            // For other 404s, also redirect to homepage
+            window.location.replace('/');
+        }
     </script>
+    <meta http-equiv="refresh" content="0; url=/">
 </head>
 <body>
     <p>If you are not redirected automatically, <a href="/">click here</a> to go to the homepage.</p>
