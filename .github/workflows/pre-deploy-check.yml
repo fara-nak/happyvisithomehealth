@@ -1,0 +1,73 @@
+name: Pre-Deploy Check
+
+on:
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build
+        env:
+          VITE_EMAILJS_SERVICE_ID: ${{ secrets.VITE_EMAILJS_SERVICE_ID }}
+          VITE_EMAILJS_TEMPLATE_ID: ${{ secrets.VITE_EMAILJS_TEMPLATE_ID }}
+          VITE_EMAILJS_PUBLIC_KEY: ${{ secrets.VITE_EMAILJS_PUBLIC_KEY }}
+        run: npm run build
+
+      - name: Verify Build Output
+        run: |
+          echo "🔍 Verifying build output..."
+          
+          # Check if dist/index.html exists
+          if [ ! -f dist/index.html ]; then
+            echo "❌ ERROR: dist/index.html not found!"
+            exit 1
+          fi
+          
+          # Check for development script (should NOT exist)
+          if grep -q "/src/main.tsx" dist/index.html; then
+            echo "❌ CRITICAL ERROR: Built index.html contains development script (/src/main.tsx)"
+            echo "This will cause a blank page in production!"
+            echo ""
+            echo "Build output:"
+            grep -A 2 -B 2 "/src/main.tsx" dist/index.html
+            exit 1
+          fi
+          
+          # Check for production script (should exist)
+          if ! grep -q "/assets/index-" dist/index.html; then
+            echo "❌ ERROR: Built index.html missing production script reference"
+            echo "The build may be incomplete."
+            exit 1
+          fi
+          
+          # Check for CSS file
+          if ! grep -q "/assets/index-" dist/index.html | grep -q "\.css"; then
+            echo "⚠️  WARNING: CSS file reference may be missing"
+          fi
+          
+          # Verify sitemap.xml exists
+          if [ ! -f dist/sitemap.xml ]; then
+            echo "⚠️  WARNING: sitemap.xml not found in dist folder"
+          fi
+          
+          echo "✅ Build verification passed!"
+          echo "   - index.html has correct production script"
+          echo "   - No development scripts found"
+          echo "   - Build is ready for deployment"
+

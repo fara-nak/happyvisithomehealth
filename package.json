@@ -4,8 +4,9 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
+    "dev": "npm run build:verify && vite",
     "build": "tsc -b && vite build",
+    "build:verify": "npm run build && bash scripts/check-build.sh",
     "lint": "eslint .",
     "preview": "vite preview"
   },

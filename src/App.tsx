@@ -211,6 +211,7 @@ function App() {
                 <li><a href="#home" onClick={closeMobileMenu}>Home</a></li>
                 <li><a href="#services" onClick={closeMobileMenu}>Services</a></li>
                 <li><a href="#about" onClick={closeMobileMenu}>About</a></li>
+                <li><a href="#faq" onClick={closeMobileMenu}>FAQ</a></li>
                 <li><a href="#contact" onClick={closeMobileMenu}>Contact</a></li>
               </ul>
               <div className="language-switcher">
@@ -357,6 +358,42 @@ function App() {
         </div>
       </section>
 
+      {/* FAQ Section */}
+      <section id="faq" className="faq" aria-labelledby="faq-heading">
+        <div className="container">
+          <h2 id="faq-heading" className="section-title">Frequently Asked Questions</h2>
+          <p className="section-subtitle">
+            Common questions about our home health care services and Medicare coverage.
+          </p>
+          <div className="faq-list">
+            <div className="faq-item">
+              <h3>Does Medicare cover home health care services?</h3>
+              <p>Yes, Happy Visit Home Health provides 100% Medicare covered home health care services. All our services including skilled nursing, physical therapy, occupational therapy, speech therapy, and wound care are covered by Medicare when you meet the eligibility requirements.</p>
+            </div>
+            <div className="faq-item">
+              <h3>What home health care services do you provide?</h3>
+              <p>We provide comprehensive home health care services including skilled nursing, physical therapy, occupational therapy, speech therapy, wound care, IV medication administration, diabetic management, home health aide services, and care coordination. All services are provided by licensed professionals in the comfort of your home.</p>
+            </div>
+            <div className="faq-item">
+              <h3>What areas do you serve?</h3>
+              <p>Happy Visit Home Health serves Los Angeles, Orange County, and surrounding areas in California. We bring professional healthcare services directly to your home.</p>
+            </div>
+            <div className="faq-item">
+              <h3>How do I qualify for home health care services?</h3>
+              <p>To qualify for Medicare-covered home health care, you must be homebound (leaving home requires considerable effort), need skilled nursing care or therapy services, and have a doctor's order for home health care. Our team can help you determine your eligibility and coordinate with your physician.</p>
+            </div>
+            <div className="faq-item">
+              <h3>How quickly can services begin?</h3>
+              <p>We work quickly to get you started. Once we receive your referral and complete the initial assessment, services typically begin within 24-48 hours. We understand the importance of timely care and prioritize getting you the help you need as soon as possible.</p>
+            </div>
+            <div className="faq-item">
+              <h3>Do I need a doctor's referral?</h3>
+              <p>Yes, Medicare requires a doctor's order for home health care services. Your physician will need to certify that you need skilled nursing care or therapy services and that you are homebound. We can help coordinate this process with your doctor.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Contact Section */}
       <section id="contact" className="contact" aria-labelledby="contact-heading">
         <div className="container">
@@ -487,6 +524,7 @@ function App() {
                 <li><a href="#home">Home</a></li>
                 <li><a href="#services">Services</a></li>
                 <li><a href="#about">About</a></li>
+                <li><a href="#faq">FAQ</a></li>
                 <li><a href="#contact">Contact</a></li>
               </ul>
             </div>
