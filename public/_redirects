@@ -1,0 +1,19 @@
+# Netlify-style redirects (if using Netlify)
+# For GitHub Pages, these won't work, but keeping for reference
+
+# Old homepage
+/index.html / 301
+
+# Old about page
+/About.html / 301
+
+# Old HIL directory (all paths)
+/HIL/* / 301
+
+# Old lander pages
+/lander / 301
+/lander/* / 301
+
+# Catch-all for any other 404s
+/* / 404
+
